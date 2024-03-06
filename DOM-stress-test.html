@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM stress test | MartinFV</title>
+  <link rel="apple-touch-icon-precomposed" href="social-media-image.png">
+  <link rel="icon" type="image/png" href="Inte.svg" >
+  <link href="animejs.css" rel="stylesheet">
+  <link href="documentation.css" rel="stylesheet">
+  <script src="anime.min.js"></script>
+  <!-- <script src="../assets/js/anime/anime.2.0.2.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.1.0.js"></script> -->
+  <style>
+
+    .el {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1em;
+      height: 1em;
+      margin: -.5em 0 0 -.5em;
+      font-size: 20px;
+    }
+
+  </style>
+</head>
+<body></body>
+<script>
+
+  var wrapperEl = document.body;
+  var numberOfEls = 500;
+  var duration = numberOfEls * 10;
+  var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+  var distance = (radius / 4 <= 150 ? 150 : radius / 2.5) / 16; 
+
+  function createEl(i) {
+    var el = document.createElement('div');
+    var hue = Math.round(360 / numberOfEls * i);
+    el.classList.add('el');
+    el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
+    el.style.backgroundColor = 'hsl(' + hue + ', 50%, 50%)';
+    wrapperEl.appendChild(el);
+    anime({
+      targets: el,
+      translateX: Math.sin(i) * distance + 'rem',
+      translateY: Math.cos(i) * distance + 'rem',
+      scale: [
+        {value: [.1, 2]},
+        {value: .1}
+      ],
+      easing: 'easeInOutSine',
+      loop: true,
+      duration: duration,
+      delay: i * (duration / numberOfEls)
+    });
+  };
+
+  for (var i = 0; i < numberOfEls; i++) createEl(i);
+
+  </script>
+  <script src="stats.min.js"></script>
+</html>
